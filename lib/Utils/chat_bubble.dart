@@ -1,8 +1,12 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 
 class ChatBubble extends StatelessWidget {
-  ChatBubble({Key? key, required this.text})
-      : super(key: key);
+  ChatBubble({Key? key, required this.text,required this.showImage,this.img}): super(key: key);
+  final bool showImage;
+  File? img;
+
   final String text;
 
   @override
@@ -26,13 +30,18 @@ class ChatBubble extends StatelessWidget {
           ),
           child: Padding(
             padding: const EdgeInsets.all(12),
-            child: Text(
-              text,
-              style: Theme.of(context)
-                  .textTheme
-                  .bodyText1!
-                  .copyWith(color: Colors.white),
-            ),
+            child: Column(
+              children: [
+                Text(
+                  text,
+                  style: Theme.of(context)
+                      .textTheme
+                      .bodyText1!
+                      .copyWith(color: Colors.white),
+                ),
+                (showImage && img!=null )? Image.file(img!) : Container(),
+              ]
+            )
           ),
         ),
       ),

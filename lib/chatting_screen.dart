@@ -14,15 +14,14 @@ import 'package:share_plus/share_plus.dart';
 String msg = "";
 
 class chattingScreen extends StatefulWidget {
-  const chattingScreen({Key? key, required this.name}) : super(key: key);
+  chattingScreen({Key? key, required this.name}) : super(key: key);
   final String name;
-
+  File? imgFile;
   @override
   State<chattingScreen> createState() => _chattingScreenState();
 }
 
 List<String> msgList = [];
-String fileUrl = "";
 final ImagePicker _picker = ImagePicker();
 
 class _chattingScreenState extends State<chattingScreen> {
@@ -73,6 +72,7 @@ class _chattingScreenState extends State<chattingScreen> {
                   msg = "@An Image is shared in other social Media Platform";
                   msgList.add(msg);
                   msgController.clear();
+                  widget.imgFile = img;
                 });
                 addMessage(widget.name, msg);
               },
@@ -132,6 +132,8 @@ class _chattingScreenState extends State<chattingScreen> {
                   itemBuilder: (contex, index) {
                     return ChatBubble(
                       text: msgList[index],
+                      showImage: msgList[index][0]=='@' && index == msgList.length-1,
+                      img: widget.imgFile,
                     );
                   },
                   itemCount: msgList.length,
